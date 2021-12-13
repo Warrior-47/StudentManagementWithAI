@@ -1,16 +1,24 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User)) {
+        string photoName = UserManager.GetUserAsync(User).Result.PhotoName;
+
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@UserManager.GetUserName(User)</span>
-                <img class="img-profile rounded-circle" @*fix image here*@
-                     src="img/undraw_profile.svg">
+                @if (photoName == "") {
+                    <img class="img-profile rounded-circle"
+                         src='@(Constants.UserImagePath+"default.png")'>
+                } else {
+                    <img class="img-profile rounded-circle"
+                         src="@Constants.UserImagePath@photoName">
+                }
+
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">

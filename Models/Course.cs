@@ -12,7 +12,7 @@ namespace StudentManagementWithAI.Models {
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(6)]
+        [MaxLength(6, ErrorMessage = "Course Code cannot be more than 6 characters")]
         [DisplayName("Course Code")]
         public string CourseCode { get; set; }
 
@@ -20,7 +20,7 @@ namespace StudentManagementWithAI.Models {
         public string Title { get; set; }
 
         [Required]
-        [Range(3,4)]
+        [Range(3,4, ErrorMessage = "Credit hours can only be 3 or 4")]
         public int CreditHours { get; set; }
 
         [DisplayName("Prerequisite")]

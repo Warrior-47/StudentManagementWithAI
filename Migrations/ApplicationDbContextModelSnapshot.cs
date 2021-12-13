@@ -385,11 +385,12 @@ namespace StudentManagementWithAI.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalCredits")
@@ -397,10 +398,6 @@ namespace StudentManagementWithAI.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
 
                     b.HasKey("Id");
 
@@ -416,6 +413,9 @@ namespace StudentManagementWithAI.Migrations
             modelBuilder.Entity("StudentManagementWithAI.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("PhotoName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });

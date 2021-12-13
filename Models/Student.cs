@@ -16,14 +16,11 @@ namespace StudentManagementWithAI.Models {
         public string Address { get; set; }
 
         [Required]
-        public char gender { get; set; }
+        public char Gender { get; set; }
 
-        [Range(0, 4.0)]
+        [Range(0, 4.0, ErrorMessage = "CGPA needs to be a non-negative number less than 4")]
         [DefaultValue(0.0)]
         public double CGPA { get; set; }
-
-        [DisplayName("Photo Name")]
-        public string PhotoName { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayName("Date of Birth")]

@@ -15,8 +15,8 @@ namespace StudentManagementWithAI.Models {
         public string Name { get; set; }
 
         [Required]
-        [StringLength(4)]
-        public char Initial { get; set; }
+        [StringLength(4, ErrorMessage = "Initial can be a maximum of 4 characters")]
+        public string Initial { get; set; }
         public string Address { get; set; }
 
         [Required]

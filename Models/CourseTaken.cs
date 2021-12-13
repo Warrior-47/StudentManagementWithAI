@@ -13,7 +13,7 @@ namespace StudentManagementWithAI.Models {
         public int CourseId { get; set; }
 
         [Required]
-        [Range(0, 4.0)]
+        [Range(0, 4.0, ErrorMessage = "GPA needs to a non-negative number less than 4")]
         public double GPA { get; set; }
 
         [Required]
