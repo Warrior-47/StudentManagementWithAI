@@ -82,6 +82,10 @@ namespace StudentManagementWithAI.Areas.Identity.Pages.Account
             public string Address { get; set; }
 
             [Required]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+            [Required]
             public char Gender { get; set; }
 
             [DataType(DataType.Date)]
@@ -131,7 +135,7 @@ namespace StudentManagementWithAI.Areas.Identity.Pages.Account
                     }
                 }
 
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, PhotoName = fileName };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, PhotoName = fileName, PhoneNumber = Input.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded) {
@@ -182,10 +186,9 @@ namespace StudentManagementWithAI.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount) {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                    } else {
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect("/Identity/Account/Login");
                     }
                 }
                 foreach (var error in result.Errors) {

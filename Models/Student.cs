@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace StudentManagementWithAI.Models {
     public class Student {
         [Key]
+        [DisplayName("Student ID")]
         public int Id { get; set; }
 
         [Required]

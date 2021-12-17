@@ -239,7 +239,7 @@ namespace StudentManagementWithAI.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreReqId")
+                    b.Property<int?>("PreReqId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -481,9 +481,7 @@ namespace StudentManagementWithAI.Migrations
 
                     b.HasOne("StudentManagementWithAI.Models.Course", "PreReqCourse")
                         .WithMany()
-                        .HasForeignKey("PreReqId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PreReqId");
 
                     b.Navigation("Department");
 

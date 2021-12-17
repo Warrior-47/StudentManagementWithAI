@@ -24,7 +24,7 @@ namespace StudentManagementWithAI.Models {
         public int CreditHours { get; set; }
 
         [DisplayName("Prerequisite")]
-        public int PreReqId { get; set; }
+        public int? PreReqId { get; set; }
         public int DepartmentId { get; set; }
 
         [ForeignKey("PreReqId")]
