@@ -1,8 +1,29 @@
-﻿@{
+﻿@model IEnumerable<StudentManagementWithAI.Models.CourseTaken>
+
+@{
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (User.IsInRole(Constants.StudentRole)) {
+    <h3>Class Schedules</h3>
+}else {
+    <h3>Nothing to Show</h3>
+}
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <td>Time</td>
+            <td>Sunday</td>
+            <td>Monday</td>
+            <td>Tuesday</td>
+            <td>Wednesday</td>
+            <td>Thursday</td>
+            <td>Friday</td>
+            <td>Saturday</td>
+        </tr>
+    </thead>
+    <tr>
+        <td></td>
+    </tr>
+</table>

@@ -12,9 +12,8 @@ namespace StudentManagementWithAI.Models {
         public int FacultyId { get; set; }
         public int CourseId { get; set; }
 
-        [Required]
         [Range(0, 4.0, ErrorMessage = "GPA needs to a non-negative number less than 4")]
-        public double GPA { get; set; }
+        public double? GPA { get; set; }
 
         [Required]
         [DataType(DataType.Time)]
