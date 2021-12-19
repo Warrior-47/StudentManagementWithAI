@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentManagementWithAI.Models.CourseTaken>
+﻿@model StudentManagementWithAI.Models.ViewModels.DashboardVM
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -6,24 +6,57 @@
 
 @if (User.IsInRole(Constants.StudentRole)) {
     <h3>Class Schedules</h3>
-}else {
+    <table class="table table-bordered text-center table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th width="12.5%">Course</th>
+                <th width="12.5%">Sunday</th>
+                <th width="12.5%">Monday</th>
+                <th width="12.5%">Tuesday</th>
+                <th width="12.5%">Wednesday</th>
+                <th width="12.5%">Thursday</th>
+                <th width="12.5%">Friday</th>
+                <th width="12.5%">Saturday</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.SchedulesData.Count == 0) {
+                <tr>
+                    <td colspan="8">You are currently not enrolled in any Course</td>
+                </tr>
+            }
+            @foreach (KeyValuePair<string, KeyValuePair<string, string>> item in Model.SchedulesData) {
+                <tr>
+                    <td>@item.Key</td>
+                    @if (item.Value.Key == "ST") {
+                        <td>@item.Value.Value</td>
+                        <td></td>
+                        <td>@item.Value.Value</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    } else if (item.Value.Key == "MW") {
+                        <td></td>
+                        <td>@item.Value.Value</td>
+                        <td></td>
+                        <td>@item.Value.Value</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    } else {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@item.Value.Value</td>
+                        <td></td>
+                        <td>@item.Value.Value</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+} else {
     <h3>Nothing to Show</h3>
 }
-
-<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <td>Time</td>
-            <td>Sunday</td>
-            <td>Monday</td>
-            <td>Tuesday</td>
-            <td>Wednesday</td>
-            <td>Thursday</td>
-            <td>Friday</td>
-            <td>Saturday</td>
-        </tr>
-    </thead>
-    <tr>
-        <td></td>
-    </tr>
-</table>

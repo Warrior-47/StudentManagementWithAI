@@ -9,25 +9,20 @@ using System.Threading.Tasks;
 namespace StudentManagementWithAI.Models {
     public class CourseTaken {
         public int StudentId { get; set; }
+
         public int FacultyId { get; set; }
+
         public int CourseId { get; set; }
+
+        public int Section { get; set; }
 
         [Range(0, 4.0, ErrorMessage = "GPA needs to a non-negative number less than 4")]
         public double? GPA { get; set; }
 
-        [Required]
-        [DataType(DataType.Time)]
-        [DisplayName("Scheduled Time")]
-        public DateTime ScheduledTime { get; set; }
-
-        [Required]
-        public int Section { get; set; }
-
         [ForeignKey("StudentId")]
         public virtual Student Student { get; set; }
-        [ForeignKey("FacultyId")]
-        public virtual Faculty Faculty { get; set; }
-        [ForeignKey("CourseId")]
-        public virtual Course Course { get; set; }
+
+        [ForeignKey("FacultyId,CourseId,Section")]
+        public virtual CoursesOffered CoursesOffered { get;set; }
     }
 }

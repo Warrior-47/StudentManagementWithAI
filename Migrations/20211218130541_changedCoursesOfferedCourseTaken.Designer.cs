@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagementWithAI.Data;
 
 namespace StudentManagementWithAI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211218130541_changedCoursesOfferedCourseTaken")]
+    partial class changedCoursesOfferedCourseTaken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,12 +271,21 @@ namespace StudentManagementWithAI.Migrations
                     b.Property<int>("Section")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CoursesOfferedCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CoursesOfferedFacultyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CoursesOfferedSection")
+                        .HasColumnType("int");
+
                     b.Property<double?>("GPA")
                         .HasColumnType("float");
 
                     b.HasKey("StudentId", "FacultyId", "CourseId", "Section");
 
-                    b.HasIndex("FacultyId", "CourseId", "Section");
+                    b.HasIndex("CoursesOfferedFacultyId", "CoursesOfferedCourseId", "CoursesOfferedSection");
 
                     b.ToTable("CourseTaken");
                 });
@@ -295,11 +306,6 @@ namespace StudentManagementWithAI.Migrations
 
                     b.Property<DateTime>("ScheduledTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("WeekDays")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
 
                     b.HasKey("FacultyId", "CourseId", "Section");
 
@@ -498,9 +504,7 @@ namespace StudentManagementWithAI.Migrations
 
                     b.HasOne("StudentManagementWithAI.Models.CoursesOffered", "CoursesOffered")
                         .WithMany()
-                        .HasForeignKey("FacultyId", "CourseId", "Section")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoursesOfferedFacultyId", "CoursesOfferedCourseId", "CoursesOfferedSection");
 
                     b.Navigation("CoursesOffered");
 

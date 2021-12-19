@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudentManagementWithAI.Data;
 using StudentManagementWithAI.Models;
+using StudentManagementWithAI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,8 +27,15 @@ namespace StudentManagementWithAI.Controllers {
             if (User.IsInRole(Constants.StudentRole)) {
                 var userId = _userManager.GetUserId(User);
                 Student currentStudent = _db.Student.Where(u => u.UserId == userId).FirstOrDefault();
-                IEnumerable<CourseTaken> coursesTakenByUser = _db.CourseTaken.Where(u => u.StudentId == currentStudent.Id && u.GPA == null);
-                return View(coursesTakenByUser);
+
+                IEnumerable<CourseTaken> coursesTakenByUser = _db.CourseTaken.Where(
+                    u => u.StudentId == currentStudent.Id && u.GPA == null
+                ).Include(u => u.CoursesOffered).Include(u => u.CoursesOffered.Course);
+
+                DashboardVM dashboardVM = new DashboardVM();
+                dashboardVM.CreateData(coursesTakenByUser);
+
+                return View(dashboardVM);
             }
             return View();
         }

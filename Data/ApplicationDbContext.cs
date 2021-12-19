@@ -23,10 +23,10 @@ namespace StudentManagementWithAI.Data {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<CoursesOffered>()
-                .HasKey(c => new { c.FacultyId, c.CourseId });
+                .HasKey(c => new { c.FacultyId, c.CourseId, c.Section });
 
             modelBuilder.Entity<CourseTaken>()
-                .HasKey(c => new { c.StudentId, c.FacultyId, c.CourseId });
+                .HasKey(c => new { c.StudentId, c.FacultyId, c.CourseId, c.Section });
         }
     }
 }
