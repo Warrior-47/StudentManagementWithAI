@@ -21,6 +21,10 @@ namespace StudentManagementWithAI.Models {
         public DateTime ScheduledTime { get; set; }
 
         [Required]
+        [MaxLength(2, ErrorMessage = "Cannot have more than 2 characters!")]
+        public string WeekDays { get; set; }
+
+        [Required]
         public int Section { get; set; }
 
         [ForeignKey("FacultyId")]
