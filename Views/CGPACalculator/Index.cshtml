@@ -1,0 +1,59 @@
+﻿@model StudentManagementWithAI.Models.ViewModels.CalculatorVM
+
+@{
+    ViewData["Title"] = "CGPA Calculator";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="mb-3">CGPA Calculator</h3>
+
+<form method="post" asp-action="Calculate">
+    <div class="row">
+        <div class="col-lg-8">
+            <div>
+                <div class="input-group mb-3">
+                    <input type="text" name="title[]" class="form-control m-input" placeholder="Enter Course Code" autocomplete="off">
+                    <input type="number" name="credit" class="form-control m-input" placeholder="Enter Credit Hours" autocomplete="off" required>
+                    <input type="number" name="gpa" step="0.01" class="form-control m-input" placeholder="Enter Grade Point Earned" autocomplete="off" required>
+                    @*<div class="input-group-append">
+                        <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
+                    </div>*@
+                </div>
+            </div>
+            <div id="newRow"></div>
+            @if (Model.Any()) {
+                <p class="text-black-50 font-weight-bold ml-2 text-lg">CGPA: @Model.CGPA</p>
+            }
+            <button id="addRow" type="button" class="btn btn-info">Add Course</button>
+            <input type="submit" class="btn btn-success" value="Calculate" />
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $("#addRow").click(function () {
+            var html = '';
+            html += '<div id="inputFormRow">';
+            html += '<div class="input-group mb-3">';
+            html += '<input type="text" name="title[]" class="form-control m-input" placeholder="Enter Course Code" autocomplete="off">';
+            html += '<input type="number" name="credit" class="form-control m-input" placeholder="Enter Credit Hours" autocomplete="off" required>';
+            html += '<input type="number" name="gpa" step="0.01" class="form-control m-input" placeholder="Enter Grade Point Earned" autocomplete="off" required>';
+            html += '<div class="input-group-append">';
+            html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
+            html += '</div>';
+            html += '</div>';
+
+            var item = $(html).hide().fadeIn(1000);
+
+            $('#newRow').append(item);
+        });
+
+        // remove row
+        $(document).on('click', '#removeRow', function () {
+            $(this).closest('#inputFormRow').fadeOut(300, function () { $(this).remove(); });
+        });
+    </script>
+}

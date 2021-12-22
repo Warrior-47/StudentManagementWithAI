@@ -22,7 +22,7 @@ using StudentManagementWithAI.Models;
 
 namespace StudentManagementWithAI.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Roles = Constants.FacultyRole)]
     public class RegisterModel : PageModel {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -98,11 +98,11 @@ namespace StudentManagementWithAI.Areas.Identity.Pages.Account
             [Display(Name = "Register Student")]
             public bool RegisterStudent { get; set; }
 
-            /* Only Faculty Fields */
+            /* Only Faculty Field */
             [StringLength(4, MinimumLength = 3, ErrorMessage = "Initial must be at least 3 characters.")]
             public string? Initial { get; set; }
 
-            /* Only Student Fields */
+            /* Only Student Field */
             [Display(Name = "Total Credits")]
             [Range(1, int.MaxValue, ErrorMessage = "Value must be positive.")]
             public int? TotalCredits { get; set; }
