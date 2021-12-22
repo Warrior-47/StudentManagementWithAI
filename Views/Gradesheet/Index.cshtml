@@ -1,0 +1,30 @@
+﻿@model StudentManagementWithAI.Models.ViewModels.GradesheetVM
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="mb-3">Grade Sheet</h3>
+
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+    <th width="12.4%">Course ID</th>
+    <th width="57.4%">Course Title</th>
+    <th width="14.4%">Credit Hours</th>
+    <th width="13.4%">Grade Point</th>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model.StudentDetails) {
+            <tr>
+                <td>@obj.courseCode</td>
+                <td>@obj.courseTitle</td>
+                <td>@obj.creditHours</td>
+                <td>@obj.gradePoint</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h5 class="text-md-left ml-2 text-dark font-weight-bold">CGPA: @Model.CGPA</h5>
+
