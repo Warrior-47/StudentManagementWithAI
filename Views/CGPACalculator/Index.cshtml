@@ -14,18 +14,15 @@
                 <div class="input-group mb-3">
                     <input type="text" name="title[]" class="form-control m-input" placeholder="Enter Course Code" autocomplete="off">
                     <input type="number" name="credit" class="form-control m-input" placeholder="Enter Credit Hours" autocomplete="off" required>
-                    <input type="number" name="gpa" step="0.01" class="form-control m-input" placeholder="Enter Grade Point Earned" autocomplete="off" required>
-                    @*<div class="input-group-append">
-                        <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
-                    </div>*@
+                    <input type="number" name="gpa" step="0.01" class="form-control m-input rounded" placeholder="Enter Grade Point Earned" autocomplete="off" required>
                 </div>
             </div>
             <div id="newRow"></div>
             @if (Model.Any()) {
                 <p class="text-black-50 font-weight-bold ml-2 text-lg">CGPA: @Model.CGPA</p>
             }
-            <button id="addRow" type="button" class="btn btn-info">Add Course</button>
-            <input type="submit" class="btn btn-success" value="Calculate" />
+            <button id="addRow" type="button" class="btn btn-info mb-5">Add Course</button>
+            <input type="submit" class="btn btn-success mb-5" value="Calculate" />
         </div>
     </div>
 </form>
