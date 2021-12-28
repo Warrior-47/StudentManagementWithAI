@@ -1,0 +1,52 @@
+﻿@model StudentManagementWithAI.Models.ViewModels.PreAdvisorVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="mb-3">Pre-Advisor AI</h3>
+
+<form method="post" asp-action="ShowResult">
+    <div class="row">
+        <div class="col-lg-8">
+            <div>
+                <div class="input-group mb-3">
+                    <input type="text" name="Courses[0]" class="form-control m-input" placeholder="Enter Course Code">
+                    <input type="text" name="Faculties[0]" class="form-control m-input" placeholder="Enter Faculty Initial">
+                </div>
+            </div>
+            <div id="newRow"></div>
+            <input type="submit" class="btn btn-success mb-5" value="Find Schedule"/>
+            <button id="removeRow" type="button" class="btn btn-danger mb-5 float-lg-right">Remove Row</button>
+            <button id="addRow" type="button" class="btn btn-info mb-5 float-lg-right mr-2">Add Row</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var maxRow = 4;
+        $("#addRow").click(function () {
+            var html = '';
+            var inps = $('#newRow > div:last').data('count') + 1 || 1;
+            html += '<div id="inputFormRow'+inps+'" data-count="' + inps +'">';
+            html += '<div class="input-group mb-3">';
+            html += '<input type="text" name="Courses[' + inps +']" id="count'+inps+'" class="form-control m-input" placeholder="Enter Course Code" autocomplete="off">';
+            html += '<input type="text" name="Faculties[' + inps +']" class="form-control m-input" placeholder="Enter Faculty Initial" autocomplete="off">';
+            html += '</div>';
+            if (inps <= maxRow) {
+                var item = $(html).hide().fadeIn(1000);
+            }
+
+            $('#newRow').append(item);
+        });
+
+        // remove row
+        $(document).on('click', '#removeRow', function () {
+            var inps = $('#newRow > div:last').data('count') || 1;
+            $('#inputFormRow'+inps).fadeOut(200, function () { $(this).remove(); });
+        });
+    </script>
+}

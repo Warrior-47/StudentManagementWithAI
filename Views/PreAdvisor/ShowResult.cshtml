@@ -1,0 +1,63 @@
+﻿@model List<StudentManagementWithAI.Utilities.Solution>
+
+@{
+    ViewData["Title"] = "ShowResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="mb-3">Possible Advising Schedule</h3>
+
+<table class="table table-bordered text-center table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th width="8%">Course</th>
+            <th width="8%">Faculty</th>
+            <th width="12%">Sunday</th>
+            <th width="12%">Monday</th>
+            <th width="12%">Tuesday</th>
+            <th width="12%">Wednesday</th>
+            <th width="12%">Thursday</th>
+            <th width="12%">Friday</th>
+            <th width="12%">Saturday</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0) {
+            <tr>
+                <th colspan="8">No Clashless Result Found</th>
+            </tr>
+        } else {
+            @foreach (var solution in Model) {
+                <tr>
+                    <th>@solution.CourseCode</th>
+                    <th>@solution.FacultyInitial</th>
+                    @if (solution.WeekDays == "ST") {
+                        <td>@solution.TimeSlot</td>
+                        <td></td>
+                        <td>@solution.TimeSlot</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    } else if (solution.WeekDays == "MW") {
+                        <td></td>
+                        <td>@solution.TimeSlot</td>
+                        <td></td>
+                        <td>@solution.TimeSlot</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    } else {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@solution.TimeSlot</td>
+                        <td></td>
+                        <td>@solution.TimeSlot</td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

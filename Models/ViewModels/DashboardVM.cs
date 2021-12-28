@@ -14,7 +14,7 @@ namespace StudentManagementWithAI.Models.ViewModels {
         public void CreateData(IEnumerable<CourseTaken> coursesTaken) {
             foreach (var obj in coursesTaken) {
                 var offered = obj.CoursesOffered;
-                var course = obj.CoursesOffered.Course;
+                var course = offered.Course;
 
                 string time = offered.ScheduledTime.ToString("hh:mm tt");
                 KeyValuePair<string, string> dayAndTime = new KeyValuePair<string, string>(offered.WeekDays, time);
