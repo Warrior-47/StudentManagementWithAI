@@ -30,27 +30,27 @@ namespace StudentManagementWithAI.Utilities {
         }
 
         public List<Solution> BacktrackingSearch() {
-            if(RecursiveBacktrackingSearch(0)) {
+            if(RecursiveBacktrackingSearch()) {
                 return _varAssignments;
             }
             return new List<Solution>();
         }
 
-        private bool RecursiveBacktrackingSearch(int index) {
+        private bool RecursiveBacktrackingSearch() {
             if(CompletenessCheck()) {
                 return true;
             }
-            Solution selectedVar = _varAssignments[index];
+            Solution selectedVar = SelectUnassignedVariable();
             for (int i = 0; i < (_varDomains[selectedVar.CourseCode]["Faculty"] as List<string>).Count(); i++) {
                 var fDomain = _varDomains[selectedVar.CourseCode]["Faculty"] as List<string>;
                 var tDomain = _varDomains[selectedVar.CourseCode]["Timeslot"] as List<CombinedTime>;
 
-                if (ConsistencyCheck(index, fDomain[i], tDomain[i])) {
+                if (ConsistencyCheck(selectedVar, fDomain[i], tDomain[i])) {
                     selectedVar.FacultyInitial = fDomain[i];
                     selectedVar.TimeSlot = tDomain[i].TimeSlot;
                     selectedVar.WeekDays = tDomain[i].Weekdays;
 
-                    if (RecursiveBacktrackingSearch(index + 1)) {
+                    if (RecursiveBacktrackingSearch()) {
                         return true;
                     }
                     selectedVar.FacultyInitial = null;
@@ -61,8 +61,25 @@ namespace StudentManagementWithAI.Utilities {
             return false;
         }
 
-        private bool ConsistencyCheck(int index, string initial, CombinedTime time) {
+        private Solution SelectUnassignedVariable() {
+            var unassignedVariables = _varAssignments.Where(u => u.TimeSlot == null).ToList();
+            Solution chosenVar = unassignedVariables[0];
+            int count = (_varDomains[chosenVar.CourseCode]["Faculty"] as List<string>).Count();
+
+            for(int i=1; i < unassignedVariables.Count(); i++) {
+                int currCount = (_varDomains[unassignedVariables[i].CourseCode]["Faculty"] as List<string>).Count();
+                if (count > currCount) {
+                    chosenVar = unassignedVariables[i];
+                    count = currCount;
+                }
+            }
+            return chosenVar;
+        }
+
+        private bool ConsistencyCheck(Solution selectedVar, string initial, CombinedTime time) {
             var assignmentsCopy = copyList(_varAssignments);
+
+            int index = _varAssignments.IndexOf(selectedVar);
             assignmentsCopy[index].FacultyInitial = initial;
             assignmentsCopy[index].TimeSlot = time.TimeSlot;
             assignmentsCopy[index].WeekDays = time.Weekdays;
